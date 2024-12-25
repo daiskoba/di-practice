@@ -1,14 +1,12 @@
 package main
 
 import (
-	"github-sub/daiskoba/di-practice/infra/wheather"
-	"github-sub/daiskoba/di-practice/usecase"
+	di "github-sub/daiskoba/di-practice/internal"
 )
 
 func main() {
-	client := wheather.NewWheatherClient()
-	uf := usecase.NewForecast(client)
 
 	place := "tokyo"
+	uf := di.NewContainer()
 	uf.UsecaseForecast(place)
 }
