@@ -1,4 +1,4 @@
-package wheather
+package weather
 
 import (
 	"encoding/json"
@@ -8,10 +8,10 @@ import (
 	"net/http"
 )
 
-type wheatherClient struct {
+type weatherClient struct {
 	place    string
 	point    map[string]string
-	forecast usecase.Wheather
+	forecast usecase.Weather
 	endpoint string
 }
 
@@ -33,22 +33,22 @@ type forecast struct {
 	Telop     string `json:"telop"`
 }
 
-func NewWheatherClient() usecase.WheatherClient {
-	wc := &wheatherClient{}
+func NewWeatherClient() usecase.WeatherClient {
+	wc := &weatherClient{}
 	wc.init()
 	return wc
 }
 
-func (wc *wheatherClient) init() {
+func (wc *weatherClient) init() {
 	wc.point = make(map[string]string)
 	wc.point["tokyo"] = "130010"
 	wc.point["osaka"] = "270000"
 	wc.endpoint = "https://weather.tsukumijima.net/api/forecast/city/"
 }
 
-func (wc *wheatherClient) Forecast(place string) (*usecase.Wheather, error) {
+func (wc *weatherClient) Forecast(place string) (*usecase.Weather, error) {
 	var err error
-	uw := &usecase.Wheather{}
+	uw := &usecase.Weather{}
 
 	if !wc.canForecast(place) {
 		err = fmt.Errorf("place %s does not forecast", place)
@@ -63,13 +63,13 @@ func (wc *wheatherClient) Forecast(place string) (*usecase.Wheather, error) {
 	return uw, err
 }
 
-func (wc *wheatherClient) canForecast(place string) bool {
+func (wc *weatherClient) canForecast(place string) bool {
 	_, ok := wc.point[place]
 	return ok
 }
 
-func (wc *wheatherClient) getForecast(place string) (*usecase.Wheather, error) {
-	uw := &usecase.Wheather{}
+func (wc *weatherClient) getForecast(place string) (*usecase.Weather, error) {
+	uw := &usecase.Weather{}
 	var err error
 
 	if !wc.canForecast(place) {
@@ -100,7 +100,7 @@ func (wc *wheatherClient) getForecast(place string) (*usecase.Wheather, error) {
 	return uw, err
 }
 
-func parse(uw *usecase.Wheather, jsonData []byte) error {
+func parse(uw *usecase.Weather, jsonData []byte) error {
 	var err error
 	var wd weatherData
 

@@ -1,7 +1,7 @@
 package di
 
 import (
-	"github-sub/daiskoba/di-practice/infra/wheather"
+	"github-sub/daiskoba/di-practice/infra/weather"
 	"github-sub/daiskoba/di-practice/usecase"
 )
 
@@ -17,12 +17,12 @@ func NewContainer() *Container {
 
 // Usecase
 func (c *Container) UsecaseForecast(place string) {
-	uf := usecase.NewForecast(c.WheatherClient())
+	uf := usecase.NewForecast(c.WeatherClient())
 	uf.UsecaseForecast(place)
 }
 
 // Infra
 
-func (c *Container) WheatherClient() usecase.WheatherClient {
-	return wheather.NewWheatherClient()
+func (c *Container) WeatherClient() usecase.WeatherClient {
+	return weather.NewWeatherClient()
 }

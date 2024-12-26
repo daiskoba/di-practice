@@ -6,34 +6,34 @@ type WeatherForecast interface {
 	UsecaseForecast(place string)
 }
 
-type WheatherClient interface {
-	Forecast(place string) (*Wheather, error)
+type WeatherClient interface {
+	Forecast(place string) (*Weather, error)
 }
 
-type wheatherForecast struct {
-	client WheatherClient
+type weatherForecast struct {
+	client WeatherClient
 }
 
-type Wheather struct {
+type Weather struct {
 	PublicTime string
 	Summary    string
 	Forecasts  map[string]string
 }
 
-func NewForecast(client WheatherClient) WeatherForecast {
+func NewForecast(client WeatherClient) WeatherForecast {
 
-	return &wheatherForecast{
+	return &weatherForecast{
 		client: client,
 	}
 }
 
-func (wf *wheatherForecast) UsecaseForecast(place string) {
-	wheather, _ := wf.client.Forecast(place)
+func (wf *weatherForecast) UsecaseForecast(place string) {
+	weather, _ := wf.client.Forecast(place)
 
-	fmt.Printf("Wheather summmary %v\n", wheather.Summary)
-	fmt.Printf("Wheather forcasts...\n")
-	for k, v := range wheather.Forecasts {
+	fmt.Printf("Weather summmary %v\n", weather.Summary)
+	fmt.Printf("Weather forcasts...\n")
+	for k, v := range weather.Forecasts {
 		fmt.Printf("\t%v %v\n", k, v)
 	}
-	fmt.Printf("Update: %v", wheather.PublicTime)
+	fmt.Printf("Update: %v", weather.PublicTime)
 }
